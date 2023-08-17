@@ -22,7 +22,10 @@
     </v-card-actions>
   </v-card>
   <Teleport to="#compare-analyst-container">
-    <div id="main" class="animate__animated animate__fadeInRight" v-show="flag"></div>
+    <v-card class="chart animate__animated animate__fadeInRight" v-show="flag">
+      <div id="radarChart" style="width: 500px;height: 420px;"></div>
+      <div id="lineChart" style="width: 500px;height: 430px;"></div>
+    </v-card>
   </Teleport>
 </template>
 
@@ -35,9 +38,10 @@ import Graphic from '@arcgis/core/Graphic';
 import Point from '@arcgis/core/geometry/Point';
 
 import * as echarts from 'echarts/core';
-import { TitleComponent, LegendComponent, TooltipComponent } from 'echarts/components';
-import { RadarChart } from 'echarts/charts';
+import { TitleComponent, LegendComponent, TooltipComponent, ToolboxComponent, GridComponent, } from 'echarts/components';
+import { RadarChart, LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
+import { UniversalTransition } from 'echarts/features';
 import { uniqueRenderer, textSymbol } from '@/utils/commonTemplate';
 
 echarts.use([
@@ -45,7 +49,11 @@ echarts.use([
   LegendComponent,
   RadarChart,
   TooltipComponent,
-  CanvasRenderer
+  CanvasRenderer,
+  ToolboxComponent,
+  GridComponent,
+  LineChart,
+  UniversalTransition,
 ]);
 
 const mapStore = useMapStore();
@@ -94,7 +102,8 @@ const startAnalysis = async () => {
   const data3 = getEvaluation(result3.data);
 
   // 绘制雷达图
-  drawRadarChart()
+  drawRadarChart();
+  drawLineChart();
   calData([data1, data2, data3]);
 
   loading.value = false;
@@ -150,12 +159,12 @@ const getEvaluation = (data) => {
   }
   return accessibilityData
 }
-var myChart;
-var option;
+var radarChart;
+var radarOption;
 const drawRadarChart = () => {
-  const chartDom = document.getElementById('main');
-  myChart = echarts.init(chartDom);
-  option = {
+  const chartDom = document.getElementById('radarChart');
+  radarChart = echarts.init(chartDom);
+  radarOption = {
     title: {
       text: "无障碍设施对比分析图",
       left: 'center',
@@ -229,12 +238,25 @@ const calData = (searchData) => {
     });
   });
   const chartData = sortedData(searchData, uniqueCategories);
-  option.radar.indicator = calIndicator(uniqueCategories, chartData);
-  option.series.data = chartData.map((data, index) => ({
+  radarOption.radar.indicator = calIndicator(uniqueCategories, chartData);
+  radarOption.series.data = chartData.map((data, index) => ({
     value: Object.values(data),
     name: `对比${index + 1}`,
   }));
-  myChart.setOption(option, true);
+  radarChart.setOption(radarOption, true);
+  console.log(chartData);
+  const lineData = chartData.map((data, index) => (
+    Object.values(data)
+  ));
+  const lineXAixs = chartData.map((data) => (
+    Object.keys(data)
+  ));
+  console.log(lineXAixs, lineData);
+  lineOption.xAxis.data = lineXAixs[0];
+  lineOption.series[0].data = lineData[0];
+  lineOption.series[1].data = lineData[1];
+  lineOption.series[2].data = lineData[2];
+  lineChart.setOption(lineOption, true);
 }
 
 const calIndicator = (uniqueCategories, chartData) => {
@@ -264,6 +286,134 @@ const sortedData = (data, order) => {
   })
 };
 
+var lineChart;
+var lineOption;
+const drawLineChart = () => {
+  var chartDom = document.getElementById('lineChart');
+  lineChart = echarts.init(chartDom);
+  lineOption = {
+    color: ['#80FFA5', '#00DDFF', '#37A2FF', '#FF0087', '#FFBF00'],
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: {
+        type: 'cross',
+        label: {
+          backgroundColor: '#6a7985'
+        }
+      }
+    },
+    legend: {
+      top: 'bottom'
+    },
+    grid: {
+      left: '3%',
+      right: '6%',
+      bottom: '8%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      name: '类别',
+      boundaryGap: false,
+      axisLabel: {
+        interval: 0,
+        inside: false,
+        formatter: function (value) {
+          return value.split('').join('\n')
+        }
+      },
+      nameTextStyle: {
+        align: "center",
+      },
+    },
+    yAxis: {
+      type: 'value',
+      name: '评分',
+    },
+    series: [
+      {
+        name: '对比1',
+        type: 'line',
+        stack: 'Total',
+        smooth: true,
+        lineStyle: {
+          width: 0
+        },
+        showSymbol: false,
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgb(128, 255, 165)'
+            },
+            {
+              offset: 1,
+              color: 'rgb(1, 191, 236)'
+            }
+          ])
+        },
+        emphasis: {
+          focus: 'series'
+        },
+      },
+      {
+        name: '对比2',
+        type: 'line',
+        stack: 'Total',
+        smooth: true,
+        lineStyle: {
+          width: 0
+        },
+        showSymbol: false,
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgb(0, 221, 255)'
+            },
+            {
+              offset: 1,
+              color: 'rgb(77, 119, 255)'
+            }
+          ])
+        },
+        emphasis: {
+          focus: 'series'
+        },
+      },
+      {
+        name: '对比3',
+        type: 'line',
+        stack: 'Total',
+        smooth: true,
+        lineStyle: {
+          width: 0
+        },
+        showSymbol: false,
+        areaStyle: {
+          opacity: 0.8,
+          color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+            {
+              offset: 0,
+              color: 'rgb(55, 162, 255)'
+            },
+            {
+              offset: 1,
+              color: 'rgb(116, 21, 219)'
+            }
+          ])
+        },
+        emphasis: {
+          focus: 'series'
+        },
+      },
+    ]
+  };
+}
+
+
 onUnmounted(() => {
   // map.remove(facilityLayer);
   mapView.graphics.remove(graphic);
@@ -272,12 +422,11 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-#main {
+.chart {
   background-color: aliceblue;
   position: absolute;
-  top: 200px;
+  top: 70px;
   right: 20px;
-  width: 500px;
-  height: 450px;
+  border-radius: 10px;
 }
 </style>

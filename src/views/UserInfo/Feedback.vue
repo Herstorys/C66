@@ -13,7 +13,6 @@
       <v-btn type="submit" color="success" class="mt-4" block>确定</v-btn>
     </v-form>
   </v-card>
-  <!-- <v-alert v-if="isShow" :type="messageType" class="alert">{{ message }}</v-alert> -->
 </template>
 
 <script setup>
@@ -21,7 +20,7 @@ import { ref, watch } from 'vue';
 import DistPicker from '@/components/DistPicker.vue';
 import { upload_feedback_question } from '@/api/feedback.js';
 import Message from '@/components/msgbox/Message.js';
-import { useUserStore }from '@/store/user'
+import { useUserStore } from '@/store/user'
 
 const enabled = ref(false)
 

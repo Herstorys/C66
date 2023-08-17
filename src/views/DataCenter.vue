@@ -288,7 +288,7 @@ const drawNightingleChart = () => {
       }
     },
     series: {
-      name: 'Nightingale Chart',
+      name: '用户反馈问题类型',
       type: 'pie',
       radius: [30, 120],
       center: ['50%', '40%'],

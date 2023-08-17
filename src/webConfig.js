@@ -6,5 +6,7 @@ export default {
   apiKey:
     'AAPKfa54aaed182d4a659d9e7f9ceb9cd368dRuPGakrRT2YdELm20nCBu9AN-GV-4IN-0zbAPhEIAdrkVvedspmIeiIHhNgHnBj',
   facilityLayer:
-    'https://services9.arcgis.com/AyAb69B4O9fTpWkb/arcgis/rest/services/c66_facility/FeatureServer'
+    'https://services9.arcgis.com/AyAb69B4O9fTpWkb/arcgis/rest/services/c66_facility/FeatureServer',
+  regionUrl:
+    'https://services9.arcgis.com/AyAb69B4O9fTpWkb/arcgis/rest/services/RegionAnalysis/FeatureServer'
 };

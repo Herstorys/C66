@@ -55,10 +55,10 @@ const logins = () => {
   login(user).then(res => {
     if (res.data.code === 0) {
       if (res.data.role === 'admin') {
-        userStore.setUserInfo(res.data.username, res.data.token);
-        dynamicRoutes.forEach(route => router.addRoute(route));
+        userStore.setUserInfo(res.data.username, res.data.token, true);
+        // dynamicRoutes.forEach(route => router.addRoute(route));
       } else {
-        userStore.setUserInfo(res.data.username, res.data.token);
+        userStore.setUserInfo(res.data.username, res.data.token, false);
       }
       Message({ type: 'success', message: res.data.msg });
       setTimeout(() => {

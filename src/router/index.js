@@ -43,6 +43,34 @@ export const staticRoutes = [
     }
   },
   {
+    path: '/DataCenter',
+    name: 'DataCenter',
+    components: {
+      nav: NavComponentVue,
+      map: EsriMapViewVue,
+      default: () => import('@/views/DataCenter.vue')
+    },
+    meta: {
+      title: '数据中心',
+      requiresAuth: true,
+      isAdmin: true
+    }
+  },
+  {
+    path: '/Manage',
+    name: 'Manage',
+    components: {
+      nav: NavComponentVue,
+      map: EsriMapViewVue,
+      default: () => import('@/views/Manage.vue')
+    },
+    meta: {
+      title: '管理中心',
+      requireAuth: true,
+      isAdmin: true
+    }
+  },
+  {
     path: '/UserInfo',
     name: 'UserInfo',
     components: {
@@ -69,7 +97,7 @@ export const staticRoutes = [
         name: 'Feedback',
         component: () => import('@/views/UserInfo/Feedback.vue'),
         meta: {
-          title: '反馈',
+          title: '问题反馈',
           requiresAuth: true
         }
       },
@@ -78,7 +106,16 @@ export const staticRoutes = [
         name: 'History',
         component: () => import('@/views/UserInfo/History.vue'),
         meta: {
-          title: '历史',
+          title: '反馈记录',
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'AddFacility',
+        name: 'AddFacility',
+        component: () => import('@/views/UserInfo/AddFacility.vue'),
+        meta: {
+          title: '添加无障碍设施',
           requiresAuth: true
         }
       }

@@ -8,10 +8,10 @@
       <RouterLink class="router-link-active" :to="{ name: 'Evaluate' }">
         <v-btn>分析与评价</v-btn>
       </RouterLink>
-      <RouterLink class="router-link-active" :to="{ name: 'DataCenter' }" v-if="router.hasRoute('DataCenter')">
+      <RouterLink class="router-link-active" :to="{ name: 'DataCenter' }" v-if="userStore.isAdmin">
         <v-btn>数据中心</v-btn>
       </RouterLink>
-      <RouterLink class="router-link-active" :to="{ name: 'Manage' }" v-if="router.hasRoute('Manage')">
+      <RouterLink class="router-link-active" :to="{ name: 'Manage' }" v-if="userStore.isAdmin">
         <v-btn>管理中心</v-btn>
       </RouterLink>
     </div>
@@ -42,7 +42,8 @@ const router = useRouter();
 
 const lists = [
   { title: "个人信息", to: 'Info' },
-  { title: "反馈", to: 'Feedback' },
+  { title: "问题反馈", to: 'Feedback' },
+  { title: "添加设施", to: 'AddFacility' },
   { title: "反馈记录", to: 'History' },
 ]
 
@@ -57,19 +58,15 @@ const logout = () => {
 
 <style scoped>
 .navigation {
-  /* position: fixed; */
   display: grid;
   grid-template-columns: 0.3fr 1fr 0.12fr;
   gap: 10px;
   justify-content: space-between;
   justify-items: center;
   align-items: center;
-  background-color: #0D47A1;
-  /* border-radius: 0px 0px 20px 20px; */
+  background-color: #256edb;
   width: 100%;
   height: 6%;
-  /* z-index: 1; */
-  /* opacity: 90%; */
 }
 
 .function {
@@ -119,6 +116,7 @@ const logout = () => {
 }
 
 .router-link-active {
+  color: black;
   text-decoration: none;
 }
 </style>

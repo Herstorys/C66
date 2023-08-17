@@ -6,6 +6,7 @@
         <v-tab value="BufferAnalyst" style="font-size: medium;">缓冲区分析</v-tab>
         <v-tab value="CompareAnalyst" style="font-size: medium;">对比分析</v-tab>
         <v-tab value="TimeAnalyst" style="font-size: medium;">信息动态展示</v-tab>
+        <v-tab value="RegionAnalyst" style="font-size: medium;">区域统计</v-tab>
       </v-tabs>
       <v-window v-model="tab">
         <v-window-item value="ThermalMap">
@@ -28,6 +29,11 @@
             <TimeAnalyst></TimeAnalyst>
           </div>
         </v-window-item>
+        <v-window-item value="RegionAnalyst">
+          <div v-if="tab === 'RegionAnalyst'">
+            <RegionAnalysis></RegionAnalysis>
+          </div>
+        </v-window-item>
       </v-window>
     </v-card>
   </div>
@@ -44,6 +50,7 @@ import BufferAnalyst from './Evaluate/BufferAnalyst.vue';
 import ThermalMap from './Evaluate/ThermalMap.vue';
 import CompareAnalyst from './Evaluate/CompareAnalyst.vue';
 import TimeAnalyst from './Evaluate/TimeAnalyst.vue';
+import RegionAnalysis from './Evaluate/RegionAnalysis.vue';
 
 const tab = ref(null);
 </script>
