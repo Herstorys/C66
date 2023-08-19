@@ -5,7 +5,7 @@ export const popupTemplate = {
       type: 'fields',
       fieldInfos: [
         {
-          fieldName: 'ID',
+          fieldName: 'OBJECTID',
           label: 'ID'
         },
         {
@@ -47,19 +47,26 @@ export const popupTemplate = {
         }
       ]
     }
-  ],
-  fieldInfos: [
-    {
-      fieldName: 'ID',
-      label: 'ID'
-    },
-    {
-      fieldName: 'imgUrl',
-      label: '图片地址'
-    }
-  ],
-  outFields: ['*']
+  ]
 };
+
+export const picRenderer = {
+  type: 'simple',
+  symbol: {
+    type: 'picture-marker',
+    url: '/facilities.png'
+  }
+};
+
+export function renderer(url) {
+  return {
+    type: 'simple',
+    symbol: {
+      type: 'picture-marker',
+      url: url
+    }
+  };
+}
 
 export const textSymbol = {
   type: 'text',

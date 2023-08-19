@@ -1,32 +1,33 @@
 <template>
-  <v-card class="mx-auto">
-    <v-card-item>
-      <v-col cols="12">
-        <v-autocomplete v-model="searchText1" :items="address" density="comfortable" aria-label="对比1" label="对比1"
-          placeholder="江西理工大学(三江校区)创新创业学院" @update:model-value="updateModelValue" :readonly="loading"></v-autocomplete>
-      </v-col>
-      <v-col cols="12">
-        <v-autocomplete v-model="searchText2" :items="address" density="comfortable" aria-label="对比2" label="对比2"
-          placeholder="赣州市人民医院" @update:model-value="updateModelValue" :readonly="loading"></v-autocomplete>
-      </v-col>
-      <v-col cols="12">
-        <v-autocomplete v-model="searchText3" :items="address" density="comfortable" aria-label="对比3" label="对比3"
-          placeholder="赣州步步高新天地" @update:model-value="updateModelValue" :readonly="loading"></v-autocomplete>
-      </v-col>
-    </v-card-item>
-    <v-card-actions>
-      <v-btn :disabled="loading" :loading="loading" block class="text-none mb-3" color="indigo-darken-3" size="large"
-        variant="flat" @click="startAnalysis" rounded="lg">
-        开始分析
-      </v-btn>
-    </v-card-actions>
-  </v-card>
-  <Teleport to="#compare-analyst-container">
-    <v-card class="chart animate__animated animate__fadeInRight" v-show="flag">
-      <div id="radarChart" style="width: 500px;height: 420px;"></div>
-      <div id="lineChart" style="width: 500px;height: 430px;"></div>
+  <div class="container animate__animated animate__fadeInLeft">
+    <v-card class="mx-auto">
+      <v-card-title class="text-center text-h5">对比分析</v-card-title>
+      <v-card-item>
+        <v-col cols="12">
+          <v-autocomplete v-model="searchText1" :items="address" density="comfortable" aria-label="对比1" label="对比1"
+            placeholder="江西理工大学(三江校区)创新创业学院" @update:model-value="updateModelValue" :readonly="loading"></v-autocomplete>
+        </v-col>
+        <v-col cols="12">
+          <v-autocomplete v-model="searchText2" :items="address" density="comfortable" aria-label="对比2" label="对比2"
+            placeholder="赣州市人民医院" @update:model-value="updateModelValue" :readonly="loading"></v-autocomplete>
+        </v-col>
+        <v-col cols="12">
+          <v-autocomplete v-model="searchText3" :items="address" density="comfortable" aria-label="对比3" label="对比3"
+            placeholder="赣州步步高新天地" @update:model-value="updateModelValue" :readonly="loading"></v-autocomplete>
+        </v-col>
+      </v-card-item>
+      <v-card-actions>
+        <v-btn :disabled="loading" :loading="loading" block class="text-none mb-3" color="blue" size="large"
+          variant="flat" @click="startAnalysis" rounded="lg">
+          开始分析
+        </v-btn>
+      </v-card-actions>
     </v-card>
-  </Teleport>
+  </div>
+  <v-card class="chart animate__animated animate__fadeInRight" v-show="flag">
+    <div id="radarChart" style="width: 500px;height: 420px;"></div>
+    <div id="lineChart" style="width: 500px;height: 430px;"></div>
+  </v-card>
 </template>
 
 <script setup>
@@ -41,8 +42,11 @@ import * as echarts from 'echarts/core';
 import { TitleComponent, LegendComponent, TooltipComponent, ToolboxComponent, GridComponent, } from 'echarts/components';
 import { RadarChart, LineChart } from 'echarts/charts';
 import { CanvasRenderer } from 'echarts/renderers';
+import { createLayer } from '@/utils/layerConfig';
 import { UniversalTransition } from 'echarts/features';
 import { uniqueRenderer, textSymbol } from '@/utils/commonTemplate';
+import { getAllFacilities } from '@/utils/commonFunction';
+
 
 echarts.use([
   TitleComponent,
@@ -60,14 +64,28 @@ const mapStore = useMapStore();
 const map = toRaw(mapStore.map)
 const mapView = toRaw(mapStore.mapView)
 
-import { useLayerStore } from '@/store/layerStore';
-const layerStore = useLayerStore();
-const facilityLayer = toRaw(layerStore.layer);
-facilityLayer.renderer = uniqueRenderer;
-map.add(facilityLayer);
+// import { useLayerStore } from '@/store/layerStore';
+// const layerStore = useLayerStore();
+// const facilityLayer = toRaw(layerStore.layer);
+// facilityLayer.renderer = uniqueRenderer;
+// map.add(facilityLayer);
 
 const flag = ref(false)
 const loading = ref(false)
+
+const featureLayer = createLayer("无障碍设施", uniqueRenderer);
+
+const features = getAllFacilities();
+
+features.then((result) => {
+  featureLayer.applyEdits({
+    addFeatures: result
+  }).catch(error => {
+    console.log(error);
+  });
+})
+featureLayer.renderer = uniqueRenderer;
+map.add(featureLayer);
 
 const address = ref([]);
 get_address().then((result) => {
@@ -244,14 +262,14 @@ const calData = (searchData) => {
     name: `对比${index + 1}`,
   }));
   radarChart.setOption(radarOption, true);
-  console.log(chartData);
+
   const lineData = chartData.map((data, index) => (
     Object.values(data)
   ));
   const lineXAixs = chartData.map((data) => (
     Object.keys(data)
   ));
-  console.log(lineXAixs, lineData);
+
   lineOption.xAxis.data = lineXAixs[0];
   lineOption.series[0].data = lineData[0];
   lineOption.series[1].data = lineData[1];
@@ -415,13 +433,22 @@ const drawLineChart = () => {
 
 
 onUnmounted(() => {
-  // map.remove(facilityLayer);
+  map.remove(featureLayer);
   mapView.graphics.remove(graphic);
   // mapView.ui.remove();
 })
 </script>
 
 <style scoped>
+.container {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  width: 450px;
+  border-radius: 20px;
+  background-color: aliceblue;
+}
+
 .chart {
   background-color: aliceblue;
   position: absolute;

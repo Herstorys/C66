@@ -5,22 +5,28 @@
       <RouterLink class="router-link-active" :to="{ name: 'Navigation' }">
         <v-btn>导航</v-btn>
       </RouterLink>
-      <RouterLink class="router-link-active" :to="{ name: 'Evaluate' }">
-        <v-btn>分析与评价</v-btn>
-      </RouterLink>
+      <v-btn>分析与评价
+        <v-menu activator="parent" open-on-hover>
+          <v-list>
+            <v-list-item v-for="(item, index) in evaluatelists" :key="index" :value="index">
+              <RouterLink class="router-link-active" :to="{ name: item.to }">
+                <v-list-item-title>{{ item.title }}</v-list-item-title>
+              </RouterLink>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-btn>
       <RouterLink class="router-link-active" :to="{ name: 'DataCenter' }" v-if="userStore.isAdmin">
         <v-btn>数据中心</v-btn>
       </RouterLink>
       <RouterLink class="router-link-active" :to="{ name: 'Manage' }" v-if="userStore.isAdmin">
         <v-btn>管理中心</v-btn>
       </RouterLink>
-    </div>
-    <div class="user">
       <v-btn prepend-icon="mdi-account-circle">
         {{ userStore.username ? userStore.username : "用户中心" }}
         <v-menu activator="parent" open-on-hover>
           <v-list>
-            <v-list-item v-for="(item, index) in lists" :key="index" :value="index">
+            <v-list-item v-for="(item, index) in userlists" :key="index" :value="index">
               <RouterLink class="router-link-active" :to="{ name: item.to }">
                 <v-list-item-title>{{ item.title }}</v-list-item-title>
               </RouterLink>
@@ -40,11 +46,19 @@ import { useUserStore } from '@/store/user';
 const userStore = useUserStore();
 const router = useRouter();
 
-const lists = [
+const userlists = [
   { title: "个人信息", to: 'Info' },
   { title: "问题反馈", to: 'Feedback' },
   { title: "添加设施", to: 'AddFacility' },
   { title: "反馈记录", to: 'History' },
+]
+
+const evaluatelists = [
+  { title: "热力图分析", to: 'ThermalMap' },
+  { title: "缓冲区分析", to: 'BufferAnalyst' },
+  { title: "对比分析", to: 'CompareAnalyst' },
+  { title: "数据动态展示", to: 'TimeAnalyst' },
+  { title: "区域统计", to: 'RegionAnalysis' },
 ]
 
 const logout = () => {
@@ -59,14 +73,18 @@ const logout = () => {
 <style scoped>
 .navigation {
   display: grid;
-  grid-template-columns: 0.3fr 1fr 0.12fr;
-  gap: 10px;
-  justify-content: space-between;
+  position: absolute;
+  justify-content: center;
   justify-items: center;
   align-items: center;
+  align-content: space-evenly;
   background-color: #256edb;
-  width: 100%;
-  height: 6%;
+  border-radius: 0 0 10px 10px;
+  width: 600px;
+  height: 100px;
+  z-index: 999;
+  left: 50%;
+  transform: translate(-50%);
 }
 
 .function {
@@ -75,8 +93,8 @@ const logout = () => {
   width: 500px;
 }
 
-.user {
-  display: flex;
+button {
+  margin: 10px;
 }
 
 /* .button {

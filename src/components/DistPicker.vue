@@ -3,25 +3,25 @@
     <!-- <v-card class="mx-auto">
       <v-card-title>地址</v-card-title>
       <v-card-item> -->
-        <v-row>
-          <v-col cols="4">
-            <v-autocomplete v-model="selectedProvince" :items="provinceItems" @update:model-value="handleProvinceChange"
-              label="省份" min-width="200" />
-          </v-col>
-          <v-col cols="4">
-            <v-autocomplete v-model="selectedCity" :items="cityItems" @update:model-value="handleCityChange" label="城市"
-              min-width="200" />
-          </v-col>
-          <v-col cols="4">
-            <v-autocomplete v-model="selectedDistrict" :items="districtItems" label="区县" min-width="200" />
-          </v-col>
-          <!-- @update:model-value="handleDistrictChange" -->
-          <!-- <v-col cols="3">
+    <v-row>
+      <v-col cols="4">
+        <v-autocomplete v-model="selectedProvince" :items="provinceItems" @update:model-value="handleProvinceChange"
+          label="省份" min-width="200" />
+      </v-col>
+      <v-col cols="4">
+        <v-autocomplete v-model="selectedCity" :items="cityItems" @update:model-value="handleCityChange" label="城市"
+          min-width="200" />
+      </v-col>
+      <v-col cols="4">
+        <v-autocomplete v-model="selectedDistrict" :items="districtItems" label="区县" min-width="200" />
+      </v-col>
+      <!-- @update:model-value="handleDistrictChange" -->
+      <!-- <v-col cols="3">
             <v-autocomplete v-model="selectedStreet" :items="streetItems" label="乡镇" min-width="200" />
           </v-col> -->
-        </v-row>
-        <v-text-field v-model="location" label="具体地址" :rules="rules" hide-details="auto"></v-text-field>
-      <!-- </v-card-item>
+    </v-row>
+    <v-text-field v-model="location" label="具体地址" :rules="rules" hide-details="auto"></v-text-field>
+    <!-- </v-card-item>
     </v-card> -->
   </div>
 </template>
@@ -35,10 +35,10 @@ const address = ref();
 const emits = defineEmits(['uploadAddress'])
 const rules = [value => !!value || '必需！'];
 
-const location = ref(null)
-const selectedProvince = ref(null)
-const selectedCity = ref(null)
-const selectedDistrict = ref(null)
+const location = ref('江西理工大学（三江校区）');
+const selectedProvince = ref('江西省');
+const selectedCity = ref('赣州市');
+const selectedDistrict = ref('南康区');
 // const selectedStreet = ref(null)
 
 const provinceItems = computed(() => Object.keys(addressData))

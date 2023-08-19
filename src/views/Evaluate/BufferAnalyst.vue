@@ -1,40 +1,42 @@
 <template>
-  <v-card class="mx-auto">
-    <v-card-item>
-      <div id="queryDiv">
-        <label style="font-size: medium;">选择并绘制要查询的几何图形:</label>
-        <br /><br />
-        <div class="geometry-options">
-          <v-btn class="esri-widget--button esri-icon-map-pin geometry-button" id="point-geometry-button" value="point"
-            title="Query by point" @click="geometryButtonsClickHandler"></v-btn>
-          <v-btn class="esri-widget--button esri-icon-polyline geometry-button" id="line-geometry-button" value="polyline"
-            title="Query by line" @click="geometryButtonsClickHandler"></v-btn>
-          <v-btn class="esri-widget--button esri-icon-polygon geometry-button" id="polygon-geometry-button"
-            value="polygon" title="Query by polygon" @click="geometryButtonsClickHandler"></v-btn>
+  <div class="container animate__animated animate__fadeInLeft">
+    <v-card class="mx-auto">
+      <v-card-item>
+        <div id="queryDiv">
+          <label style="font-size: medium;">选择并绘制要查询的几何图形:</label>
+          <br /><br />
+          <div class="geometry-options">
+            <v-btn class="esri-widget--button esri-icon-map-pin geometry-button" id="point-geometry-button" value="point"
+              title="Query by point" @click="geometryButtonsClickHandler"></v-btn>
+            <v-btn class="esri-widget--button esri-icon-polyline geometry-button" id="line-geometry-button"
+              value="polyline" title="Query by line" @click="geometryButtonsClickHandler"></v-btn>
+            <v-btn class="esri-widget--button esri-icon-polygon geometry-button" id="polygon-geometry-button"
+              value="polygon" title="Query by polygon" @click="geometryButtonsClickHandler"></v-btn>
+          </div>
+          <br />
+          <div class="tooltip">
+            <label for="bufferNum" style="font-size: medium;">设置缓冲距离:</label>
+            <div id="bufferNum"></div>
+          </div>
+          <br />
         </div>
-        <br />
-        <div class="tooltip">
-          <label for="bufferNum" style="font-size: medium;">设置缓冲距离:</label>
-          <div id="bufferNum"></div>
-        </div>
-        <br />
-      </div>
-    </v-card-item>
-    <v-card-actions>
-      <v-btn class="esri-button" id="clearGeometry" type="button" @click="clearGeometry">删除</v-btn>
-    </v-card-actions>
-  </v-card>
-  <Teleport to="#buffer-analyst-container">
-    <div id="chartResultDiv" class="animate__animated animate__fadeInRight" v-show="flag">
-      <Chart :queryData="queryData" :xAxis="xAxis"></Chart>
-    </div>
-    <div id="tableDiv" class="animate__animated animate__fadeInUp" v-show="flag"></div>
-  </Teleport>
+      </v-card-item>
+      <v-card-actions>
+        <v-btn class="esri-button" id="clearGeometry" type="button" @click="clearGeometry">删除</v-btn>
+      </v-card-actions>
+    </v-card>
+  </div>
+  <div id="chartResultDiv" class="animate__animated animate__fadeInRight" v-show="flag">
+    <Chart :queryData="queryData" :xAxis="xAxis"></Chart>
+  </div>
+  <div id="tableDiv" class="animate__animated animate__fadeInUp" v-show="flag"></div>
 </template>
 
 <script setup>
 import { onMounted, ref, toRaw, watch, onUnmounted } from 'vue';
 import { useMapStore } from '@/store/mapStore';
+import { createLayer } from '@/utils/layerConfig';
+import { getAllFacilities } from '@/utils/commonFunction';
 import Chart from '@/views/Evaluate/Chart.vue';
 import FeatureTable from "@arcgis/core/widgets/FeatureTable.js";
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer.js';
@@ -48,13 +50,6 @@ const mapStore = useMapStore();
 const map = toRaw(mapStore.map);
 const mapView = toRaw(mapStore.mapView);
 
-import { useLayerStore } from '@/store/layerStore';
-const layerStore = useLayerStore();
-const facilityLayer = toRaw(layerStore.layer);
-
-facilityLayer.renderer = uniqueRenderer;
-map.add(facilityLayer)
-
 const flag = ref(false);
 const queryData = ref([]);
 const xAxis = ref([]);
@@ -65,6 +60,9 @@ map.addMany([bufferLayer, sketchLayer]);
 
 let layerView = null;
 let bufferSize = 1000;
+
+const facilityLayer = createLayer('无障碍设施', uniqueRenderer);
+
 let featureTable = new FeatureTable({
   view: mapView,
   layer: facilityLayer,
@@ -102,6 +100,18 @@ mapView.when(() => {
   }
 })
 
+const features = getAllFacilities();
+features.then((result) => {
+  facilityLayer.applyEdits({
+    addFeatures: result
+  }).then(() => {
+    featureTable.refresh()
+  }).catch(error => {
+    console.log(error)
+  })
+})
+
+map.add(facilityLayer);
 
 mapView.whenLayerView(facilityLayer).then((layerViews) => {
   layerView = layerViews;
@@ -293,6 +303,7 @@ watch(() => queryData.value, (newValue, oldValue) => {
 
 onUnmounted(() => {
   clearGeometry();
+  map.remove(facilityLayer);
   map.remove(sketchLayer);
   map.remove(bufferLayer);
   mapView.ui.remove(sketchViewModel);
@@ -300,11 +311,21 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+/* #queryDiv {
+  position: absolute;
+  top: 120px;
+  left: 20px;
+  min-width: 400px;
+  font-size: 14px;
+  padding: 10px;
+} */
+
 #chartResultDiv {
   position: absolute;
   background-color: aliceblue;
   top: 100px;
   right: 20px;
+  border-radius: 10px;
 }
 
 #tableDiv {
@@ -314,6 +335,7 @@ onUnmounted(() => {
   left: 100px;
   width: 1000px;
   height: 300px;
+  border-radius: 10px;
 }
 
 .geometry-options {
@@ -338,5 +360,14 @@ onUnmounted(() => {
 #bufferNum {
   width: 90%;
   margin: 2.5em auto 0;
+}
+
+.container {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  width: 450px;
+  border-radius: 20px;
+  background-color: aliceblue;
 }
 </style>

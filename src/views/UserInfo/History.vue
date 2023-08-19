@@ -86,6 +86,7 @@ const userFeedbackData = ref()
 const userRoutes = ref()
 
 get_search_user_feedback(userStore.username).then(result => {
+  console.log(result);
   userFeedbackData.value = result.data
 }).catch(error => {
   console.log(error);

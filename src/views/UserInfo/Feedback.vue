@@ -8,9 +8,11 @@
       <v-select v-model="feedbackQuestions" :items="questions" density="compact" label="请输入反馈信息" class="mt-4" multiple
         chips></v-select>
       <v-checkbox-btn v-model="enabled" label="其他问题"></v-checkbox-btn>
-      <v-text-field v-model="otherQuestions" :disabled="!enabled" hide-details label="请输入反馈信息" placeholder='最多输入50个字'
-        class="mt-4"></v-text-field>
-      <v-btn type="submit" color="success" class="mt-4" block>确定</v-btn>
+      <v-textarea v-model="otherQuestions" :disabled="!enabled" hide-details label="请输入反馈信息" placeholder='最多输入50个字'
+        class="mt-4" rows="3"></v-textarea>
+      <v-btn type="submit" color="blue" class="mt-4 elevation-4" block>
+        确&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定
+      </v-btn>
     </v-form>
   </v-card>
 </template>
@@ -85,7 +87,7 @@ const submitForm = () => {
 .cards {
   position: absolute;
   background-color: #fff;
-  top: 70px;
+  top: 50px;
   left: 20px;
   min-width: 500px;
   padding: 10px;

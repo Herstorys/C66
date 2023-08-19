@@ -16,6 +16,6 @@ onMounted(() => {
 <style scoped>
 #viewDiv {
   width: 100%;
-  height: 94%;
+  height: 100%;
 }
 </style>

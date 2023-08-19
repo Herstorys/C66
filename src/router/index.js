@@ -10,7 +10,7 @@ export const staticRoutes = [
     path: '/',
     name: 'home',
     components: {
-      nav: NavComponentVue,
+      // nav: NavComponentVue,
       map: EsriMapViewVue
     },
     meta: {
@@ -21,7 +21,7 @@ export const staticRoutes = [
     path: '/Navigation',
     name: 'Navigation',
     components: {
-      nav: NavComponentVue,
+      // nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/NavigationView.vue')
     },
@@ -33,20 +33,67 @@ export const staticRoutes = [
     path: '/Evaluate',
     name: 'Evaluate',
     components: {
-      nav: NavComponentVue,
+      // nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/EvaluateView.vue')
     },
     meta: {
       title: '评价',
       requiresAuth: true
-    }
+    },
+    children: [
+      {
+        path: 'ThermalMap',
+        name: 'ThermalMap',
+        component: () => import('@/views/Evaluate/ThermalMap.vue'),
+        meta: {
+          title: '热力图分析',
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'BufferAnalyst',
+        name: 'BufferAnalyst',
+        component: () => import('@/views/Evaluate/BufferAnalyst.vue'),
+        meta: {
+          title: '缓冲区分析',
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'CompareAnalyst',
+        name: 'CompareAnalyst',
+        component: () => import('@/views/Evaluate/CompareAnalyst.vue'),
+        meta: {
+          title: '对比分析',
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'TimeAnalyst',
+        name: 'TimeAnalyst',
+        component: () => import('@/views/Evaluate/TimeAnalyst.vue'),
+        meta: {
+          title: '信息动态展示',
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'RegionAnalysis',
+        name: 'RegionAnalysis',
+        component: () => import('@/views/Evaluate/RegionAnalysis.vue'),
+        meta: {
+          title: '区域统计',
+          requiresAuth: true
+        }
+      }
+    ]
   },
   {
     path: '/DataCenter',
     name: 'DataCenter',
     components: {
-      nav: NavComponentVue,
+      // nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/DataCenter.vue')
     },
@@ -60,7 +107,7 @@ export const staticRoutes = [
     path: '/Manage',
     name: 'Manage',
     components: {
-      nav: NavComponentVue,
+      // nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/Manage.vue')
     },
@@ -74,7 +121,7 @@ export const staticRoutes = [
     path: '/UserInfo',
     name: 'UserInfo',
     components: {
-      nav: NavComponentVue,
+      // nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/UserInfo.vue')
     },
@@ -141,7 +188,7 @@ export const staticRoutes = [
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     components: {
-      nav: NavComponentVue,
+      // nav: NavComponentVue,
       default: () => import('@/components/NotFound.vue')
     },
     meta: {
@@ -155,7 +202,7 @@ export const dynamicRoutes = [
     path: '/DataCenter',
     name: 'DataCenter',
     components: {
-      nav: NavComponentVue,
+      // nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/DataCenter.vue')
     },
@@ -169,7 +216,7 @@ export const dynamicRoutes = [
     path: '/Manage',
     name: 'Manage',
     components: {
-      nav: NavComponentVue,
+      // nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/Manage.vue')
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="eFunction animate__animated animate__fadeInLeft">
+  <!-- <div class="eFunction animate__animated animate__fadeInLeft">
     <v-card>
       <v-tabs v-model="tab" bg-color="primary" align-tabs="center" color="white">
         <v-tab value="ThermalMap" style="font-size: medium;">热力图分析</v-tab>
@@ -40,7 +40,8 @@
   <div id="thermal-map-container"></div>
   <div id="time-analyst-container"></div>
   <div id="buffer-analyst-container"></div>
-  <div id="compare-analyst-container"></div>
+  <div id="compare-analyst-container"></div> -->
+  <RouterView></RouterView>
 </template>
 
 <script setup>

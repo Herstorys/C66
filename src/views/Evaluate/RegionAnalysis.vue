@@ -1,19 +1,21 @@
 <template>
-  <v-card class="filter">
-    <h3>筛选条件:</h3>
-    <div class="filter-container">
-      <v-select v-model:model-value="facilityType" :items="items" label="选择筛选类型" style="width: 200px;"></v-select>
-    </div>
-    <div class="filter-container">
-      <v-select v-model="operator" :items="[{ title: '大于', value: '>' }, { title: '小于', value: '<' }]"
-        label="选择操作符"></v-select>
-      <v-text-field v-model="filterNumber" min="0" label="筛选值" :rules="rules" placeholder="20"></v-text-field>
-    </div>
-    <div class="btns">
-      <v-btn @click="reset" style="margin: 5px;">重置</v-btn>
-      <v-btn @click="filter" style="margin: 5px;">筛选</v-btn>
-    </div>
-  </v-card>
+  <div class="container animate__animated animate__fadeInLeft">
+    <v-card class="filter">
+      <v-card-title class="text-center text-h5">区域分析</v-card-title>
+      <v-card-subtitle style="font-size: large;color: black;">筛选条件:</v-card-subtitle>
+      <div class="filter-container">
+        <v-select v-model:model-value="facilityType" :items="items" label="选择筛选类型" style="width: 200px;"></v-select>
+      </div>
+      <div class="filter-container">
+        <v-select v-model="operator" :items="operators" label="选择操作符"></v-select>
+        <v-text-field v-model="filterNumber" min="0" label="筛选值" :rules="rules" placeholder="20"></v-text-field>
+      </div>
+      <div class="btns">
+        <v-btn @click="reset" style="margin: 5px;">重置</v-btn>
+        <v-btn @click="filter" style="margin: 5px;">筛选</v-btn>
+      </div>
+    </v-card>
+  </div>
 </template>
 
 <script setup>
@@ -38,13 +40,14 @@ const items = [
   { title: '盲道', value: 'baf_md' },
 ]
 
+const operators = [{ title: '大于', value: '>' }, { title: '小于', value: '<' }]
 
 const rules = [
   value => !!value || '请先填写筛选数值！',
 ]
-const facilityType = ref();
-const operator = ref();
-const filterNumber = ref();
+const facilityType = ref(items[0].value);
+const operator = ref(operators[0].value);
+const filterNumber = ref(20);
 
 const regionUrl = webConfig.regionUrl;
 
@@ -220,10 +223,20 @@ const reset = () => {
 
 onUnmounted(() => {
   map.remove(regionLayer);
+  mapView.ui.remove(legend);
 })
 </script>
 
 <style scoped>
+.container {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  width: 450px;
+  border-radius: 20px;
+  background-color: aliceblue;
+}
+
 .filter {
   padding: 10px;
 }

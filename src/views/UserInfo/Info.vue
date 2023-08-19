@@ -43,7 +43,7 @@ const user = {
 <style scoped>
 .forms {
   position: absolute;
-  top: 70px;
+  top: 50px;
   left: 20px;
   width: 400px;
   border-radius: 20px;

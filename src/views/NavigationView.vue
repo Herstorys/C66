@@ -13,11 +13,9 @@ import { upload_route } from '@/api/user';
 import { useUserStore } from '@/store/user';
 import webConfig from "@/webConfig";
 import { uniqueRenderer } from "@/utils/commonTemplate";
-import { layerList } from "@/utils/layerConfig";
-import { useLayerStore } from '@/store/layerStore';
+import { createLayer, layerList, getExtent } from "@/utils/layerConfig";
+import { getAllFacilities } from '@/utils/commonFunction';
 
-const layerStore = useLayerStore();
-const facilityLayer = toRaw(layerStore.layer);
 const mapStore = useMapStore();
 const userStore = useUserStore();
 const map = toRaw(mapStore.map)
@@ -78,8 +76,21 @@ reactiveUtils.watch(
   }
 );
 
-facilityLayer.renderer = uniqueRenderer;
-map.add(facilityLayer);
+const facilityLayer = createLayer('无障碍设施', uniqueRenderer);
+const features = getAllFacilities();
+
+features.then((result) => {
+  facilityLayer.fullExtent = getExtent(result);
+  facilityLayer.applyEdits({
+    addFeatures: result
+  }).then(() => {
+    map.add(facilityLayer);
+  }).catch(error => {
+    console.log(error)
+  });
+}).catch((error) => {
+  console.log(error);
+})
 
 const layerlist = layerList(mapView, facilityLayer);
 
@@ -96,18 +107,10 @@ onUnmounted(() => {
 <style scoped>
 #directionDiv {
   position: absolute;
-  top: 71px;
+  top: 40px;
   left: 15px;
   width: 20%;
   height: 80%;
   overflow: auto;
-}
-
-.nav {
-  height: 6%;
-}
-
-.map {
-  height: 94%;
 }
 </style>
