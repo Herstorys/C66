@@ -1,9 +1,7 @@
 <template>
   <transition name="down">
     <div class="msgbox" :style="style[type]" v-if="isShow">
-      <!-- 上面绑定的是样式 -->
-      <!-- 不同提示图标会变 -->
-      <i class="iconfont" :class="style[type].icon"></i>
+      <i :class="style[type].icon"></i>
       <span class="text">{{ message }}</span>
     </div>
   </transition>
@@ -23,23 +21,23 @@ export default {
       default: 'warn'
     }
   },
-  setup() {
+  setup () {
     // 定义一个对象，包含三种情况的样式，对象key就是类型字符串
     const style = {
       warn: {
-        icon: 'icon-warning',
+        icon: 'icon ion-alert-circled',
         color: '#E6A23C',
         backgroundColor: 'rgb(253, 246, 236)',
         borderColor: 'rgb(250, 236, 216)'
       },
       error: {
-        icon: 'icon-shanchu',
+        icon: 'icon ion-close-circled',
         color: '#F56C6C',
         backgroundColor: 'rgb(254, 240, 240)',
         borderColor: 'rgb(253, 226, 226)'
       },
       success: {
-        icon: 'icon-queren2',
+        icon: 'icon ion-checkmark-circled',
         color: '#67C23A',
         backgroundColor: 'rgb(240, 249, 235)',
         borderColor: 'rgb(225, 243, 216)'
@@ -53,6 +51,45 @@ export default {
     return { style, isShow }
   }
 }
+// import { ref, onMounted } from 'vue';
+
+// const props = defineProps({
+//   message: {
+//     type: String,
+//     default: ''
+//   },
+//   type: {
+//     type: String,
+//     default: 'warn'
+//   },
+// });
+
+// const style = {
+//   warn: {
+//     icon: 'mdi-alert-circle',
+//     iconColor: '#E6A23C',
+//     backgroundColor: 'rgb(253, 246, 236)',
+//     borderColor: 'rgb(250, 236, 216)'
+//   },
+//   error: {
+//     icon: 'mdi-alert-outline',
+//     iconColor: '#F56C6C',
+//     backgroundColor: 'rgb(254, 240, 240)',
+//     borderColor: 'rgb(253, 226, 226)'
+//   },
+//   success: {
+//     icon: 'mdi-checkbox-marked-circle-outline',
+//     iconColor: '#67C23A',
+//     backgroundColor: 'rgb(240, 249, 235)',
+//     borderColor: 'rgb(225, 243, 216)'
+//   }
+// }
+
+// const isShow = ref(false);
+
+// onMounted(() => {
+//   isShow.value = true;
+// });
 </script>
 <style scoped lang="less">
 // 动画效果
@@ -81,7 +118,7 @@ export default {
   z-index: 9999;
   left: 50%;
   margin-left: -150px;
-  top: 75px;
+  top: 100px;
   line-height: 50px;
   padding: 0 25px;
   border: 1px solid #e4e4e4;
@@ -97,4 +134,5 @@ export default {
   .text {
     vertical-align: middle;
   }
-}</style>
+}
+</style>
