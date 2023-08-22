@@ -7,7 +7,7 @@
       <dist-picker @uploadAddress="uploadAddress"></dist-picker>
       <v-select v-model="feedbackQuestions" :items="questions" density="compact" label="请输入反馈信息" class="mt-4" multiple
         chips></v-select>
-      <v-checkbox-btn v-model="enabled" label="其他问题"></v-checkbox-btn>
+      <v-checkbox-btn v-model="enabled" label="其它问题"></v-checkbox-btn>
       <v-textarea v-model="otherQuestions" :disabled="!enabled" hide-details label="请输入反馈信息" placeholder='最多输入50个字'
         class="mt-4" rows="3"></v-textarea>
       <v-btn type="submit" color="blue" class="mt-4 elevation-4" block>
@@ -57,7 +57,7 @@ const userStore = useUserStore()
 
 const submitForm = () => {
   const selectedQuestions = feedbackQuestions.value || [];
-  const otherText = otherQuestions.value ? `其他问题：${otherQuestions.value}` : '';
+  const otherText = otherQuestions.value ? `其它问题：${otherQuestions.value}` : '';
   detail.value = [...selectedQuestions, otherText].join(';');
   if (feedbackForm.value.validate()) {
     const formData = {

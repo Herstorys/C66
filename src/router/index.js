@@ -11,7 +11,8 @@ export const staticRoutes = [
     name: 'home',
     components: {
       // nav: NavComponentVue,
-      map: EsriMapViewVue
+      map: EsriMapViewVue,
+      default: () => import('@/views/HomeView.vue')
     },
     meta: {
       title: '首页'
@@ -70,11 +71,11 @@ export const staticRoutes = [
         }
       },
       {
-        path: 'TimeAnalyst',
-        name: 'TimeAnalyst',
-        component: () => import('@/views/Evaluate/TimeAnalyst.vue'),
+        path: 'POIAnalysis',
+        name: 'POIAnalysis',
+        component: () => import('@/views/Evaluate/POIAnalysis.vue'),
         meta: {
-          title: '信息动态展示',
+          title: 'POI分析',
           requiresAuth: true
         }
       },
@@ -90,17 +91,17 @@ export const staticRoutes = [
     ]
   },
   {
-    path: '/DataCenter',
-    name: 'DataCenter',
+    path: '/AddFacility',
+    name: 'AddFacility',
     components: {
       // nav: NavComponentVue,
       map: EsriMapViewVue,
-      default: () => import('@/views/DataCenter.vue')
+      default: () => import('@/views/AddFacility.vue')
     },
     meta: {
-      title: '数据中心',
-      requiresAuth: true,
-      isAdmin: true
+      title: '添加无障碍设施',
+      requiresAuth: true
+      // isAdmin: true
     }
   },
   {
@@ -156,16 +157,16 @@ export const staticRoutes = [
           title: '反馈记录',
           requiresAuth: true
         }
-      },
-      {
-        path: 'AddFacility',
-        name: 'AddFacility',
-        component: () => import('@/views/UserInfo/AddFacility.vue'),
-        meta: {
-          title: '添加无障碍设施',
-          requiresAuth: true
-        }
       }
+      // {
+      //   path: 'AddFacility',
+      //   name: 'AddFacility',
+      //   component: () => import('@/views/AddFacility.vue'),
+      //   meta: {
+      //     title: '添加无障碍设施',
+      //     requiresAuth: true
+      //   }
+      // }
     ]
   },
   {
@@ -229,7 +230,7 @@ export const dynamicRoutes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.VITE_BASE_URL),
   routes: staticRoutes
 });
 

@@ -39,10 +39,9 @@ export const useMapStore = defineStore('mapStore', {
     initializeMap() {
       // 在此处初始化 Map 和 MapView
       const map = new Map({
-        basemap: 'topo-vector'
-        // {
-        //   baseLayers: [tiledLayer, tiledLayer_poi]
-        // }
+        basemap: {
+          baseLayers: [tiledLayer, tiledLayer_poi]
+        }
         // layers: [],
       });
       const mapView = new MapView({

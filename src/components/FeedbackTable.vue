@@ -12,11 +12,11 @@
     </thead>
     <tbody>
       <tr v-for="(item, index) in feedbackData" :key="index" @click="handleRowClick(item)">
-        <td>{{ index + 1 }}</td>
-        <td>{{ item.username }}</td>
-        <td>{{ formattedTime(item.time) }}</td>
-        <td>{{ item.address }}</td>
-        <td>{{ item.detail }}</td>
+        <td class="text-center">{{ index + 1 }}</td>
+        <td class="text-center">{{ item.username }}</td>
+        <td class="text-center">{{ formattedTime(item.time) }}</td>
+        <td class="text-center">{{ item.address }}</td>
+        <td class="text-center">{{ item.detail }}</td>
         <td>
           <img :src="item.pic_url" alt="反馈问题的图片" style="max-width: 100px; max-height: 100px;"
             @click="showEnlargedImg(item.pic_url)" data-action="enlarge">

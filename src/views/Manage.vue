@@ -1,6 +1,6 @@
 <template>
   <div class="manage animate__animated animate__fadeInRight">
-    <v-card>
+    <v-card width="1100px">
       <v-tabs v-model="tab" bg-color="primary">
         <v-tab value="one">无障碍设施管理</v-tab>
         <v-tab value="two">反馈问题管理</v-tab>

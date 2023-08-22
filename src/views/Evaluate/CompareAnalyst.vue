@@ -33,7 +33,7 @@
 <script setup>
 import { toRaw, ref, onUnmounted } from 'vue';
 import { useMapStore } from "@/store/mapStore";
-import { get_address, get_evaluation } from "@/api/address";
+import { get_address, get_evaluation } from "@/api/evaluate";
 
 import Graphic from '@arcgis/core/Graphic';
 import Point from '@arcgis/core/geometry/Point';

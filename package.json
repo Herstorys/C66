@@ -2,8 +2,10 @@
   "name": "C66",
   "version": "0.0.0",
   "scripts": {
-    "build": "vite build",
+    "build": "vite build --mode development",
+    "build:prod": "vite build --mode production",
     "dev": "vite",
+    "dev:prod": "vite --mode production",
     "preview": "vite preview"
   },
   "dependencies": {

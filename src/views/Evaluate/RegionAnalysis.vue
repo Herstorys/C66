@@ -122,7 +122,8 @@ const regionLayer = new FeatureLayer({
         type: "media",
         mediaInfos: [
           {
-            title: "{NAME} 无障碍设施情况 总得分：{SUM_eval}",
+            title: "{NAME}",
+            caption: "无障碍设施总评分：{SUM_eval}",
             altText: "该地区暂时没有无障碍设施记录！",
             type: "pie-chart",
             value: {

@@ -2,9 +2,10 @@
   <div class="navigation">
     <div class="title">城市无障碍出行系统</div>
     <div class="function">
-      <RouterLink class="router-link-active" :to="{ name: 'Navigation' }">
-        <v-btn>导航</v-btn>
+      <RouterLink class="router-link-active" :to="{ name: 'AddFacility' }">
+        <v-btn>添加无障碍设施</v-btn>
       </RouterLink>
+
       <v-btn>分析与评价
         <v-menu activator="parent" open-on-hover>
           <v-list>
@@ -16,14 +17,13 @@
           </v-list>
         </v-menu>
       </v-btn>
-      <RouterLink class="router-link-active" :to="{ name: 'DataCenter' }" v-if="userStore.isAdmin">
-        <v-btn>数据中心</v-btn>
+      <RouterLink class="router-link-active" :to="{ name: 'Navigation' }">
+        <v-btn>导航</v-btn>
       </RouterLink>
       <RouterLink class="router-link-active" :to="{ name: 'Manage' }" v-if="userStore.isAdmin">
         <v-btn>管理中心</v-btn>
       </RouterLink>
-      <v-btn prepend-icon="mdi-account-circle">
-        {{ userStore.username ? userStore.username : "用户中心" }}
+      <v-btn>用户中心
         <v-menu activator="parent" open-on-hover>
           <v-list>
             <v-list-item v-for="(item, index) in userlists" :key="index" :value="index">
@@ -49,7 +49,7 @@ const router = useRouter();
 const userlists = [
   { title: "个人信息", to: 'Info' },
   { title: "问题反馈", to: 'Feedback' },
-  { title: "添加设施", to: 'AddFacility' },
+  // { title: "添加设施", to: 'AddFacility' },
   { title: "反馈记录", to: 'History' },
 ]
 
@@ -57,8 +57,8 @@ const evaluatelists = [
   { title: "热力图分析", to: 'ThermalMap' },
   { title: "缓冲区分析", to: 'BufferAnalyst' },
   { title: "对比分析", to: 'CompareAnalyst' },
-  { title: "数据动态展示", to: 'TimeAnalyst' },
-  { title: "区域统计", to: 'RegionAnalysis' },
+  { title: "POI数据统计", to: 'POIAnalysis' },
+  { title: "区域数据统计", to: 'RegionAnalysis' },
 ]
 
 const logout = () => {
@@ -94,7 +94,7 @@ const logout = () => {
 }
 
 button {
-  margin: 10px;
+  margin: 5px;
 }
 
 /* .button {
