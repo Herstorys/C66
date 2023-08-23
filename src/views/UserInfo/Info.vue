@@ -18,7 +18,7 @@
         <v-card-text>
           <v-text-field v-model="user.username" label="用户名" :disabled="!isEditing"></v-text-field>
           <v-text-field v-model="user.password" label="密码" :disabled="!isEditing"></v-text-field>
-          <v-btn block rounded="xl" size="x-large">确认</v-btn>
+          <v-btn block rounded="xl" size="x-large" :disabled="!isEditing">确认</v-btn>
         </v-card-text>
       </v-form>
     </v-card>

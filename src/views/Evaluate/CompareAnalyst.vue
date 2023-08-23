@@ -452,7 +452,7 @@ onUnmounted(() => {
 .chart {
   background-color: aliceblue;
   position: absolute;
-  top: 70px;
+  top: 60px;
   right: 20px;
   border-radius: 10px;
 }

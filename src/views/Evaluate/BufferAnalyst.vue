@@ -323,7 +323,7 @@ onUnmounted(() => {
 #chartResultDiv {
   position: absolute;
   background-color: aliceblue;
-  top: 100px;
+  top: 60px;
   right: 20px;
   border-radius: 10px;
 }

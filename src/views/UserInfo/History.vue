@@ -75,6 +75,7 @@ import { useMapStore } from '@/store/mapStore';
 import { useUserStore } from '@/store/user'
 import { ref, toRaw, onUnmounted } from 'vue';
 import { textSymbol } from '@/utils/commonTemplate';
+import webConfig from '@/webConfig';
 
 const userStore = useUserStore();
 const mapStore = useMapStore();
@@ -86,8 +87,13 @@ const userFeedbackData = ref()
 const userRoutes = ref()
 
 get_search_user_feedback(userStore.username).then(result => {
-  console.log(result);
-  userFeedbackData.value = result.data
+  userFeedbackData.value = result.data.map((item) => {
+    return {
+      ...item,
+      pic_url_before: webConfig.picURL + item.pic_url_before,
+      pic_url_after: webConfig.picURL + item.pic_url_after,
+    }
+  });
 }).catch(error => {
   console.log(error);
 })

@@ -4,7 +4,6 @@ import LayerList from '@arcgis/core/widgets/LayerList.js';
 import webConfig from '@/webConfig';
 import { getOnlyTypeFaccility } from './commonFunction';
 import Graphic from '@arcgis/core/Graphic';
-import * as promiseUtils from '@arcgis/core/core/promiseUtils';
 
 /**
  * 将后端获取的数据处理为可以加入到FeatureLayer中的数据
@@ -25,8 +24,8 @@ export function getDatas(datas) {
         evaluation: data.evaluation,
         address: data.address,
         time: time,
-        pic_url_before: '/public/' + data.pic_url_before,
-        pic_url_after: '/public/' + data.pic_url_after
+        pic_url_before: webConfig.picURL + data.pic_url_before,
+        pic_url_after: webConfig.picURL + data.pic_url_after
       },
       geometry: { longitude: data.lon, latitude: data.lat, type: 'point' }
     });

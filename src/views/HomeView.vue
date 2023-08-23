@@ -3,12 +3,13 @@
     <v-hover v-slot="{ isHovering, props }">
       <v-card v-bind="props" :elevation="isHovering ? 24 : 6">
         <v-card-item>
-          <v-card-title class="text-center" style="font-size: xx-large;">无障碍设施类型占比</v-card-title>
-          <div id="pieChart" style="height: 360px;width:500px;"></div>
+          <v-card-title class="text-center" style="font-size: x-large;">无障碍设施类型占比</v-card-title>
+          <div id="pieChart" style="height: 410px;width:500px;"></div>
         </v-card-item>
+        <v-divider></v-divider>
         <v-card-item>
-          <v-card-title class="text-center" style="font-size: xx-large;">词云</v-card-title>
-          <div id="wordcloudChart" style="height: 360px;width:500px;"></div>
+          <v-card-title class="text-center" style="font-size: x-large;">词云</v-card-title>
+          <div id="wordcloudChart" style="height: 410px;width:500px;"></div>
         </v-card-item>
       </v-card>
     </v-hover>
@@ -17,12 +18,13 @@
     <v-hover v-slot="{ isHovering, props }">
       <v-card v-bind="props" :elevation="isHovering ? 24 : 6">
         <v-card-item>
-          <v-card-title class="text-center" style="font-size: xx-large;">用户反馈问题</v-card-title>
-          <div id="nightingleChart" style="height: 360px;width:500px;"></div>
+          <v-card-title class="text-center" style="font-size: x-large;">用户反馈问题</v-card-title>
+          <div id="nightingleChart" style="height: 410px;width:500px;"></div>
         </v-card-item>
+        <v-divider></v-divider>
         <v-card-item>
-          <v-card-title class="text-center" style="font-size: xx-large;">用户反馈数量</v-card-title>
-          <div id="lineChart" style="height: 360px;width:500px;"></div>
+          <v-card-title class="text-center" style="font-size: x-large;">用户反馈数量</v-card-title>
+          <div id="lineChart" style="height: 410px;width:500px;"></div>
         </v-card-item>
       </v-card>
     </v-hover>
@@ -96,7 +98,6 @@ get_word_data().then(res => {
   wordCloudData.value = data.map(element => {
     return { value: element.frequency, name: element.word }
   });
-  console.log(wordCloudData.value);
 }).catch(err => {
   console.log(err);
 });
@@ -112,8 +113,14 @@ const drawPieChart = () => {
       trigger: 'item',
     },
     legend: {
-      orient: 'vertical',
-      left: 'left',
+      // orient: 'horizonal',
+      top: 'bottom',
+    },
+    grid: {
+      left: '0%',
+      right: '4%',
+      bottom: '0%',
+      containLabel: true
     },
     toolbox: {
       show: true,
@@ -182,6 +189,12 @@ const drawNightingleChart = () => {
       trigger: 'item',
       formatter: '{a} <br/>{b} : {c} ({d}%)'
     },
+    grid: {
+      left: '0%',
+      right: '6%',
+      bottom: '0%',
+      containLabel: true
+    },
     toolbox: {
       show: true,
       feature: {
@@ -246,6 +259,19 @@ const drawWordcloudChart = () => {
   var wordcloudChartDom = document.getElementById('wordcloudChart');
   wordcloudChart = echarts.init(wordcloudChartDom);
   wordcloudOption = {
+    tooltip: {
+      trigger: 'item',
+      formatter: '{a} <br/>{b} : {c}'
+    },
+    toolbox: {
+      show: true,
+      feature: {
+        mark: { show: true },
+        dataView: { show: true, readOnly: false },
+        restore: { show: true },
+        saveAsImage: { show: true }
+      }
+    },
     series: {
       type: 'wordCloud',
       shape: 'circle',
@@ -310,11 +336,13 @@ const drawLineChart = () => {
     tooltip: {
       trigger: 'axis'
     },
-    legend: {},
+    legend: {
+      top: 'bottom'
+    },
     grid: {
-      left: '1%',
-      right: '5%',
-      bottom: '3%',
+      left: '0%',
+      right: '6%',
+      bottom: '4%',
       containLabel: true
     },
     toolbox: {
@@ -331,7 +359,6 @@ const drawLineChart = () => {
       type: 'category',
       boundaryGap: false,
       axisLabel: {
-        interval: 0,
         inside: false,
         rotate: 45,
       },
@@ -443,6 +470,7 @@ const calLineData = () => {
 
 watch([feedbackFacilities, feedbackQuestions], () => {
   const [times, feedbackFacilitiesData, feedbackQuestionsData] = calLineData();
+
   lineOption.xAxis.data = times;
   lineOption.series[0].data = feedbackFacilitiesData;
   lineOption.series[1].data = feedbackQuestionsData;
@@ -459,12 +487,11 @@ onMounted(() => {
 
 
 import TimeSlider from "@arcgis/core/widgets/TimeSlider.js";
-import Legend from "@arcgis/core/widgets/Legend.js";
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import TimeExtent from "@arcgis/core/TimeExtent.js";
 import { useMapStore } from "@/store/mapStore";
 import { toRaw, onUnmounted } from "vue";
-import { layerList, getExtent } from "@/utils/layerConfig";
+import { getExtent } from "@/utils/layerConfig";
 import { popupTemplate, uniqueRenderer } from '@/utils/commonTemplate';
 import { getAllFacilities } from '@/utils/commonFunction';
 

@@ -36,6 +36,7 @@ import { get_search_feedback } from '@/api/feedback';
 import { formattedTime } from '@/utils/commonFunction';
 import Graphic from '@arcgis/core/Graphic';
 import Point from '@arcgis/core/geometry/Point';
+import webConfig from '@/webConfig';
 
 const mapStore = useMapStore();
 const map = toRaw(mapStore.map)
@@ -44,7 +45,12 @@ const mapView = toRaw(mapStore.mapView)
 const feedbackData = ref();
 
 get_search_feedback().then(result => {
-  feedbackData.value = result.data
+  feedbackData.value = result.data.map(item => {
+    return {
+      ...item,
+      pic_url: webConfig.picURL + item.pic_url
+    }
+  });
 }).catch(error => {
   console.log(error);
 })

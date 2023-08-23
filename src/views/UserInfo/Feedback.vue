@@ -10,7 +10,7 @@
       <v-checkbox-btn v-model="enabled" label="其它问题"></v-checkbox-btn>
       <v-textarea v-model="otherQuestions" :disabled="!enabled" hide-details label="请输入反馈信息" placeholder='最多输入50个字'
         class="mt-4" rows="3"></v-textarea>
-      <v-btn type="submit" color="blue" class="mt-4 elevation-4" block>
+      <v-btn type="submit" color="blue" class="mt-4 elevation-4" block :loading="loading">
         确&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;定
       </v-btn>
     </v-form>
@@ -32,6 +32,7 @@ const feedbackForm = ref()
 const feedbackQuestions = ref()
 const otherQuestions = ref()
 const detail = ref()
+const loading = ref(false);
 
 const address = ref()
 const uploadAddress = (val) => {
@@ -56,10 +57,12 @@ const isShow = ref(false)
 const userStore = useUserStore()
 
 const submitForm = () => {
+  loading.value = true;
   const selectedQuestions = feedbackQuestions.value || [];
   const otherText = otherQuestions.value ? `其它问题：${otherQuestions.value}` : '';
   detail.value = [...selectedQuestions, otherText].join(';');
   if (feedbackForm.value.validate()) {
+    console.log(address.value);
     const formData = {
       username: userStore.username,
       detail: detail.value,
@@ -75,6 +78,7 @@ const submitForm = () => {
     }).catch((error) => {
       console.log(error);
     }).finally(() => {
+      loading.value = false;
       setTimeout(() => {
         isShow.value = false;
       }, 2000);

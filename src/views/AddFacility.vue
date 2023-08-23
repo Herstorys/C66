@@ -99,7 +99,6 @@ const sendImagesToBackend = () => {
   identifyFiles.value = [];
   upload_feedback_facilities(imageArray.value).then((result) => {
     const data = result.data;
-    console.log(data);
     if (data.code === 0) {
       success_count.value = data.success_count;
       failure_count.value = data.failure_count;

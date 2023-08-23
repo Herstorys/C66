@@ -1,6 +1,10 @@
 <template>
-  <div id="barChart" class="chart"></div>
-  <div id="pieChart" class="chart"></div>
+  <v-hover v-slot="{ isHovering, props }">
+    <v-card class="mx-auto" v-bind="props" :elevation="isHovering ? 24 : 6">
+      <div id="barChart" style="width: 500px;height: 420px;"></div>
+      <div id="pieChart" style="width: 500px;height: 420px;"></div>
+    </v-card>
+  </v-hover>
   <!-- <div id="radarChart" class="chart"></div> -->
 </template>
 
@@ -60,9 +64,6 @@ const drawPieChart = () => {
       roseType: 'radius',
       itemStyle: {
         borderRadius: 5
-      },
-      label: {
-        show: false
       },
     }
   };
@@ -189,8 +190,8 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.chart {
+/* .chart {
   width: 500px;
-  height: 340px;
-}
+  height: 400px;
+} */
 </style>

@@ -27,7 +27,7 @@
           <img :src="item.pic_url_after" alt="识别后的图片" style="max-width: 100px; max-height: 100px;"
             @click="showEnlargedImg(item.pic_url_after)" data-action="enlarge">
         </td>
-        <td>
+        <td style="width: 220px;">
           <v-btn @click="addFacility(item)" color="success" prepend-icon="mdi-check-circle"
             data-action="enlarge">通过</v-btn>&nbsp;
           <v-btn @click="deleteFacility(item)" color="error" prepend-icon="mdi-delete-forever"
@@ -60,6 +60,7 @@ import Message from '@/components/msgbox/Message.js';
 import { formattedTime } from '@/utils/commonFunction';
 import Graphic from '@arcgis/core/Graphic';
 import Point from '@arcgis/core/geometry/Point';
+import webConfig from '@/webConfig';
 
 const mapStore = useMapStore();
 const map = toRaw(mapStore.map)
@@ -74,8 +75,8 @@ get_search_facilities().then(result => {
   data.value = result.data.map(item => {
     return {
       ...item,
-      pic_url_before: "/public" + item.pic_url_before,
-      pic_url_after: "/public" + item.pic_url_after,
+      pic_url_before: webConfig.picURL + item.pic_url_before,
+      pic_url_after: webConfig.picURL + item.pic_url_after,
     }
   });
 }).catch(error => {
