@@ -91,6 +91,7 @@ function register () {
   align-items: center;
   height: 100%;
   background-image: linear-gradient(to right, #c2fbef, #a6c1ee);
+  z-index: 1000;
 }
 
 .login_box {

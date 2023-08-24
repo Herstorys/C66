@@ -6,6 +6,8 @@ import Basemap from '@arcgis/core/Basemap';
 import TileLayer from '@arcgis/core/layers/TileLayer.js';
 import WebTileLayer from '@arcgis/core/layers/WebTileLayer.js';
 import Home from '@arcgis/core/widgets/Home.js';
+import FeatureLayer from '@arcgis/core/layers/FeatureLayer.js';
+import webConfig from '@/webConfig';
 
 const chineseBasemap = new TileLayer({
   url: 'http://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer',
@@ -21,6 +23,12 @@ const tiledLayer_poi = new WebTileLayer({
   urlTemplate:
     'http://{subDomain}.tianditu.gov.cn/DataServer?T=cva_w&x={col}&y={row}&l={level}&tk=d78a106210e0de1d150387915a260a7b',
   subDomains: ['t0', 't1', 't2', 't3', 't4', 't5', 't6', 't7']
+});
+
+const zg_nk_layer = new FeatureLayer({
+  title: '行政区划',
+  url: webConfig.zg_nk_Url,
+  opacity: 0.4
 });
 
 // const basemap = new Basemap({
@@ -41,14 +49,14 @@ export const useMapStore = defineStore('mapStore', {
       const map = new Map({
         basemap: {
           baseLayers: [tiledLayer, tiledLayer_poi]
-        }
-        // layers: [],
+        },
+        layers: [zg_nk_layer]
       });
       const mapView = new MapView({
         map,
         center: [114.763, 25.793],
-        zoom: 12,
-        scale: 200000
+        zoom: 10
+        // scale: 200000
       });
       const home = new Home({
         view: mapView

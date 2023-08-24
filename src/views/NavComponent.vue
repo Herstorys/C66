@@ -1,11 +1,10 @@
 <template>
   <div class="navigation">
-    <div class="title">城市无障碍出行系统</div>
+    <div class="title">城市无障碍出行服务系统</div>
     <div class="function">
       <RouterLink class="router-link-active" :to="{ name: 'AddFacility' }">
         <v-btn>添加无障碍设施</v-btn>
       </RouterLink>
-
       <v-btn>分析与评价
         <v-menu activator="parent" open-on-hover>
           <v-list>
@@ -82,7 +81,7 @@ const logout = () => {
   border-radius: 0 0 10px 10px;
   width: 600px;
   height: 100px;
-  z-index: 999;
+  z-index: 1;
   left: 50%;
   transform: translate(-50%);
 }
