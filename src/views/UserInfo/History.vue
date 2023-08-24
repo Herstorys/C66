@@ -90,10 +90,10 @@ get_search_user_feedback(userStore.username).then(result => {
   userFeedbackData.value = result.data.map((item) => {
     return {
       ...item,
-      pic_url_before: webConfig.picURL + item.pic_url_before,
-      pic_url_after: webConfig.picURL + item.pic_url_after,
+      pic_url: webConfig.picURL + item.pic_url,
     }
   });
+  console.log(userFeedbackData.value);
 }).catch(error => {
   console.log(error);
 })
