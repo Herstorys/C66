@@ -1,6 +1,6 @@
 <template>
   <div class="history animate__animated animate__fadeInRight">
-    <v-card>
+    <v-card width="1100px">
       <v-tabs v-model="tab" bg-color="primary">
         <v-tab value="one">路径查询记录</v-tab>
         <v-tab value="two">用户反馈记录</v-tab>
@@ -170,7 +170,7 @@ onUnmounted(() => {
   position: absolute;
   bottom: 20px;
   right: 20px;
-  width: 1000px;
+  width: 1100px;
 }
 
 tr:hover {
