@@ -5,7 +5,7 @@
       <v-card-item>
         <v-card-subtitle>添加图层</v-card-subtitle>
         <div class="btn">
-          <v-btn v-for="(item, index) in items" :key="index" @click="addLayer(item.layer)" style="margin: 6px;">
+          <v-btn v-for="(item, index) in items" :key="index" @click="addLayer(item.name)" style="margin: 6px;">
             {{ item.name }}</v-btn>
         </div>
       </v-card-item>
@@ -52,37 +52,52 @@ features.then((result) => {
   console.log(error);
 })
 
-const curbRammpLayer = featureLayer("缘石坡道", renderer('/缘石坡道.png'));
+// const curbRammpLayer = featureLayer("缘石坡道", renderer('/缘石坡道.png'));
 
-const tactilePavingLayer = featureLayer("盲道", renderer('/盲道.png'));
+// const tactilePavingLayer = featureLayer("盲道", renderer('/盲道.png'));
 
-const elevatorLayer = featureLayer("无障碍电梯", renderer('/无障碍电梯.png'));
+// const elevatorLayer = featureLayer("无障碍电梯", renderer('/无障碍电梯.png'));
 
-const parkLayer = featureLayer("无障碍停车位", renderer('/无障碍停车位.png'));
+// const parkLayer = featureLayer("无障碍停车位", renderer('/无障碍停车位.png'));
 
-const slopeLayer = featureLayer("无障碍坡道", renderer('/无障碍坡道.png'));
+// const slopeLayer = featureLayer("无障碍坡道", renderer('/无障碍坡道.png'));
 
-const stairwayLayer = featureLayer("无障碍楼梯", renderer('/无障碍楼梯.png'));
+// const stairwayLayer = featureLayer("无障碍楼梯", renderer('/无障碍楼梯.png'));
 
-const tolietLayer = featureLayer("无障碍厕所", renderer('/无障碍厕所.png'));
+// const tolietLayer = featureLayer("无障碍厕所", renderer('/无障碍厕所.png'));
+
+// const items = [
+//   { name: "全部无障碍设施", layer: facilityLayer },
+//   { name: "盲道", layer: tactilePavingLayer },
+//   { name: "缘石坡道", layer: curbRammpLayer },
+//   { name: "无障碍电梯", layer: elevatorLayer },
+//   { name: "无障碍停车位", layer: parkLayer },
+//   { name: "无障碍坡道", layer: slopeLayer },
+//   { name: "无障碍楼梯", layer: stairwayLayer },
+//   { name: "无障碍厕所", layer: tolietLayer },
+// ]
 
 const items = [
-  { name: "全部无障碍设施", layer: facilityLayer },
-  { name: "盲道", layer: tactilePavingLayer },
-  { name: "缘石坡道", layer: curbRammpLayer },
-  { name: "无障碍电梯", layer: elevatorLayer },
-  { name: "无障碍停车位", layer: parkLayer },
-  { name: "无障碍坡道", layer: slopeLayer },
-  { name: "无障碍楼梯", layer: stairwayLayer },
-  { name: "无障碍厕所", layer: tolietLayer },
+  { name: "全部无障碍设施" },
+  { name: "盲道" },
+  { name: "缘石坡道" },
+  { name: "无障碍电梯" },
+  { name: "无障碍停车位" },
+  { name: "无障碍坡道" },
+  { name: "无障碍楼梯" },
+  { name: "无障碍厕所" },
 ]
 
 // 定义一个变量来存储当前选中的图层
 let selectedLayer = null;
 
 // 添加图层的点击事件处理程序
-const addLayer = (layer) => {
-  if (map && layer) {
+const addLayer = (layerName) => {
+  if (map && layerName === "全部无障碍设施") {
+    map.add(facilityLayer);
+    selectedLayer = facilityLayer;
+  } else if (map && layerName) {
+    const layer = featureLayer(layerName, renderer(`/${layerName}.png`));
     map.add(layer);
     selectedLayer = layer;
   } else {

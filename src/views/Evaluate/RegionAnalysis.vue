@@ -52,6 +52,7 @@ const filterNumber = ref(20);
 const regionUrl = webConfig.regionUrl;
 
 const regionLayer = new FeatureLayer({
+  title: "区域统计分析图例",
   url: regionUrl,
   renderer: {
     type: "pie-chart",

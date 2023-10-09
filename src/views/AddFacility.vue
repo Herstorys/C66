@@ -30,7 +30,7 @@
   <v-overlay v-model="overlay" class="align-center justify-center">
     <div style="display: grid;justify-items: center;">
       <v-card>
-        <span v-show="loading" class="mb-4" style="font-size: xx-large;">识别中，请稍等！</span>
+        <span v-show="loading" class="mb-4" style="font-size: xx-large;margin: 5px;">识别中，请稍等！</span>
         <v-progress-linear :active="loading" :indeterminate="loading" color="deep-purple-accent-4"></v-progress-linear>
       </v-card>
       <span v-show="showPicture" class="mb-4" style="font-size: x-large;">

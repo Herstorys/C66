@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <NavComponent></NavComponent>
-    <!-- <RouterView name="nav" class="nav"></RouterView> -->
+    <!-- <NavComponent></NavComponent> -->
+    <RouterView name="nav" class="nav"></RouterView>
     <RouterView name="map" class="map"></RouterView>
     <!-- <EsriMapView></EsriMapView> -->
     <RouterView></RouterView>

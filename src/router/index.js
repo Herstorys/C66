@@ -10,7 +10,7 @@ export const staticRoutes = [
     path: '/',
     name: 'home',
     components: {
-      // nav: NavComponentVue,
+      nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/HomeView.vue')
     },
@@ -22,7 +22,7 @@ export const staticRoutes = [
     path: '/Navigation',
     name: 'Navigation',
     components: {
-      // nav: NavComponentVue,
+      nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/NavigationView.vue')
     },
@@ -34,7 +34,7 @@ export const staticRoutes = [
     path: '/Evaluate',
     name: 'Evaluate',
     components: {
-      // nav: NavComponentVue,
+      nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/EvaluateView.vue')
     },
@@ -94,7 +94,7 @@ export const staticRoutes = [
     path: '/AddFacility',
     name: 'AddFacility',
     components: {
-      // nav: NavComponentVue,
+      nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/AddFacility.vue')
     },
@@ -108,7 +108,7 @@ export const staticRoutes = [
     path: '/Manage',
     name: 'Manage',
     components: {
-      // nav: NavComponentVue,
+      nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/Manage.vue')
     },
@@ -122,7 +122,7 @@ export const staticRoutes = [
     path: '/UserInfo',
     name: 'UserInfo',
     components: {
-      // nav: NavComponentVue,
+      nav: NavComponentVue,
       map: EsriMapViewVue,
       default: () => import('@/views/UserInfo.vue')
     },

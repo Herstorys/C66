@@ -1,9 +1,11 @@
 <template>
   <div class="navigation">
-    <div class="title">城市无障碍出行服务系统</div>
+    <RouterLink class="router-link-active" to="/">
+      <div class="title">城市无障碍出行服务系统</div>
+    </RouterLink>
     <div class="function">
       <RouterLink class="router-link-active" :to="{ name: 'AddFacility' }">
-        <v-btn>添加无障碍设施</v-btn>
+        <v-btn title="添加无障碍设施">添加无障碍设施</v-btn>
       </RouterLink>
       <v-btn>分析与评价
         <v-menu activator="parent" open-on-hover>
@@ -17,10 +19,10 @@
         </v-menu>
       </v-btn>
       <RouterLink class="router-link-active" :to="{ name: 'Navigation' }">
-        <v-btn>导航</v-btn>
+        <v-btn title="导航">导航</v-btn>
       </RouterLink>
       <RouterLink class="router-link-active" :to="{ name: 'Manage' }" v-if="userStore.isAdmin">
-        <v-btn>管理中心</v-btn>
+        <v-btn title="管理中心">管理中心</v-btn>
       </RouterLink>
       <v-btn>用户中心
         <v-menu activator="parent" open-on-hover>
@@ -65,7 +67,7 @@ const logout = () => {
   localStorage.removeItem("user");
   setTimeout(() => {
     router.push({ name: 'login' })
-  }, 2000)
+  }, 500)
 }
 </script>
 
